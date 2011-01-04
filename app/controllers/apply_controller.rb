@@ -1,6 +1,8 @@
 # Handles presenting application forms and receiving submissions.
 class ApplyController < ApplicationController
   
+  skip_before_filter :verify_authenticity_token
+  
   before_filter :call
   before_filter :preview
   

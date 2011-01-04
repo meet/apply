@@ -1,0 +1,58 @@
+en:
+  helpers:
+    label:
+      student:
+        _student_first_name: First name
+        _student_last_name: Last name
+        _student_id_number: ID number
+        _student_gender: Gender
+        _student_birthday: Birthday
+        _student_city: City
+        _student_school: School
+        _student_address: Address
+        _student_home_phone: Home phone number
+        _student_cell_phone: Cell phone number
+        _student_email: Email address
+        _parent_full_name: Full name
+        _parent_work_phone: Work phone number
+        _parent_cell_phone: Cell phone number
+        _parent_email: Email address
+        _permission_to_apply: I authorize my son/daughter's application to the MEET program.
+    section:
+      student:
+        student: Student Information
+        parent: Parent Information
+        permission: Parental Permission
+  
+  activerecord:
+    attributes:
+      student:
+        _student_first_name: Student first name
+        _student_last_name: Student last name
+        _student_id_number: ID number
+        _student_gender: Gender
+        _student_birthday: Birthday
+        _student_city: City
+        _student_school: School
+        _student_address: Address
+        _student_home_phone: Student home phone number
+        _student_cell_phone: Student cell phone number
+        _student_email: Student email address
+        _parent_full_name: Parent full name
+        _parent_work_phone: Parent work phone number
+        _parent_cell_phone: Parent cell phone number
+        _parent_email: Parent email address
+        _permission_to_apply: Permission to apply
+    
+    errors:
+      models:
+        student:
+          attributes:
+            _student_gender:
+              inclusion: can't be blank
+            _student_city:
+              inclusion: must be one of the choices, or -Other-
+            _student_school:
+              inclusion: must be one of the choices, or -Other-
+            _permission_to_apply:
+              accepted: must be given

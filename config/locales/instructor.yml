@@ -1,0 +1,41 @@
+en:
+  helpers:
+    label:
+      instructor:
+        major: Major(s) or research area
+        status: MIT affiliation
+        graduation_year: Undergrad graduation year
+        why_meet:
+          Please describe in 300 words why you want to participate in MEET.
+        programming:
+          Please describe your programming background.
+          Mention programming languages you know, or professional experience you have.
+        teaching:
+          Please describe any teaching experience you have.
+          What did you find enjoyable? What did you find challenging?
+        teamwork:
+          Please describe your teamwork, leadership and project management experience.
+          What was your role? Your strengths and weaknesses?
+          What was challenging, and what did you gain?
+        anything_else:
+          Anything else you would like to mention?
+          Interests, talents, something you bring to the MEET team?
+        resume: "Please attach a copy of your resume as a PDF or plain text:"
+        how_hear: How did you hear about MEET?
+  
+  activerecord:
+    attributes:
+      instructor:
+        status: MIT affiliation
+        why_meet: Why MEET
+        programming: Programming & industry
+        teamwork: Teamwork, leadership, & project management
+    
+    errors:
+      models:
+        instructor:
+          attributes:
+            status:
+              inclusion: can't be blank
+            resume:
+              blank: must be attached

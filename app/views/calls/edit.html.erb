@@ -1,0 +1,41 @@
+<% content_for :head do %>
+<style>
+form { width: 30%; }
+iframe {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 99%;
+  width: 70%;
+  border: none;
+  border-left: 1px solid gray;
+}
+</style>
+<% end %>
+
+<%= form_for @call do |f| %>
+  <h2><%= @call.id.titleize %> Application</h2>
+  
+  <p><%= f.label :title %><br/>
+     <%= f.text_field :title, :size => 50 %></p>
+  <p><%= f.label :deadline %><br/>
+     <%= f.date_select :deadline, :start_year => Time.now.year,
+                                  :end_year => Time.now.year + 1,
+                                  :include_blank => true %> midnight</p>
+  <p><%= f.label :description %><br/><small>also appears on app closed page</small><br/>
+     <%= f.text_area :description, :size => '40x3' %></p>
+  <p>Applications <%= f.check_box :open, :class => :openclose %></p>
+  <p>
+  <% if @call.review_class %>
+    Reviews <%= f.check_box :reviewable, :class => :openclose %>
+  <% else %>
+    No reviewing
+  <% end %>
+  </p>
+  
+  <div style="text-align:center"><%= f.submit 'Update' %></div>
+  
+  <p><%= link_to '&larr; Back to list'.html_safe, calls_path %></p>
+<% end %>
+
+<iframe src="<%= apply_path(@call.id, :preview => true) %>">

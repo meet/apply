@@ -1,0 +1,10 @@
+<h1><%= @call.app_class.model_name.human.titleize %> Applicants</h1>
+
+<p><%= pluralize @apps.size, 'applicant' %></p>
+
+<table>
+<% @apps.each do |app| %>
+  <tr><td><%= link_to @call.identify(app), review_app_path(:app_id => app) %></td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,47 @@
+<% content_for :head do %>
+<link rel="stylesheet" type="text/css" href="http://meet.mit.edu/revised/css/style.css"/>
+<style>
+p {
+  margin: 0.5em 0;
+}
+label, li { /* copy of p */
+  color: #333;
+  font-size: 13px;
+  line-height: 18px;
+}
+input, textarea { /* copy of body, p */
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 13px;
+}
+#form {
+  padding: 0 5em;
+  max-width: 700px;
+}
+#apply-form-deadline {
+  color: #c33;
+  font-size: 16px;
+}
+#apply-form-description {
+  margin: 1em 0;
+}
+#apply-form-table {
+  border-collapse: collapse;
+}
+</style>
+<% end %>
+
+<% content_for :body do %>
+<div id="banner"></div>
+<div id="container">
+<div id="content">
+
+<div id="form">
+<%= yield %>
+</div>
+
+<div id="footer">Thanks for applying!</div>
+</div>
+</div>
+<% end %>
+
+<%= render :file => 'layouts/apply' %>

@@ -1,0 +1,13 @@
+== apply
+
+Apply to MEET.
+
+== Development
+
+Simulate HTTPS requests by using http://127.0.0.1 instead of localhost.
+
+== Deployment to Heroku
+
+  heroku config:add RAILS_SECRET_TOKEN=<long random string>
+  heroku config:add EXCEPTIONAL_API_KEY=<key from getexceptional.com>
+  heroku config:add OPENID_PROVIDER=<server URL>

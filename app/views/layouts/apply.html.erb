@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Apply to MEET: Middle East Education through Technology</title>
+  <%= yield :head %>
+  <%= stylesheet_link_tag 'apply' %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+
+<%= yield :body %>
+
+<% if @preview %><div id="apply-preview"><div id="apply-preview-banner">Preview Only</div></div><% end %>
+</body>
+</html>

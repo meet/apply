@@ -1,0 +1,7 @@
+panda:
+  id: panda
+  title: Pandas Needed
+  description:
+  open: false
+  reviewable: false
+  identity_columns: name birthday

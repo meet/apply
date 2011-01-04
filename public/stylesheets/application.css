@@ -1,0 +1,31 @@
+body {
+  margin: 0.5in;
+  font-family: Verdana, 'Bitstream Vera Sans', sans-serif;
+}
+#logged-in {
+  position: absolute;
+  right: 0.5in;
+  top: 0.3in;
+}
+table th {
+  text-align: left;
+}
+input[type=submit] {
+  font-size: larger;
+}
+.openclose-container { display: inline; }
+.openclose-is-open, .openclose-is-close {
+  border: 1px solid #999;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 2px;
+}
+.openclose-is-open { display: inline; background: #efe; color: #333; }
+.openclose-is-close { display: inline; background: #fee; color: #999; }
+.openclose-container .openclose-is-open { display: none; }
+.openclose-container .openclose-is-close { display: inline; cursor: pointer; }
+.openclose-container.openclose-open .openclose-is-open { display: inline; cursor: pointer; }
+.openclose-container.openclose-open .openclose-is-close { display: none; }

@@ -1,0 +1,50 @@
+<h1 id="apply-form-header"><%= @call.title %></h1>
+<% if @call.deadline %>
+<p id="apply-form-deadline">DEADLINE midnight on <%= @call.deadline.to_s :long %></p>
+<% end %>
+
+<p id="apply-form-description"><%= @call.description %></p>
+
+<% if @app.errors.any? %>
+  <div id="apply-form-errors">
+  <p><%= pluralize @app.errors.count, 'error' %> prevented your application from being received:</p>
+  <ul>
+    <% @app.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+  </div>
+<% end %>
+
+<%= form_for :app, :url => apply_path(@call.id, @preview ? { :preview => true } : {}), :html => { :multipart => true } do |f| %>
+  <table id="apply-form-table">
+  <% last_section = nil %>
+  <% app_form_columns(@call).each do |c| %>
+    
+    <% section = c.name[/^_(.*?)_/, 1] %>
+    <% if section and section != last_section %>
+      <tr class="apply-form-section"><td colspan="2">
+        <%= t(section, :scope => [ :helpers, :section, @call.id ]) %>
+      </td></tr>
+      <% last_section = section %>
+    <% end %>
+    
+    <tr class="apply-form-<%= c.type %>">
+    <% case c.type %>
+    <% when :binary, :text %>
+      <td colspan="2"><%= sentential_label @call.id, c.name %><br/><%= app_input @call, :app, c %></td>
+      
+    <% when :boolean %>
+      <td colspan="2"><%= app_input @call, :app, c %> <%= label @call.id, c.name %></td>
+      
+    <% else %>
+      <td><%= label @call.id, c.name %></td><td><%= app_input @call, :app, c %></td>
+      
+    <% end %>
+    </tr>
+  <% end %>
+  <tr id="apply-form-submit"><td colspan="2">
+    <%= f.submit((@preview ? 'Preview!' : 'Submit!'), { :disable_with => 'Please wait...' } ) %>
+  </td></tr>
+  </table>
+<% end %>

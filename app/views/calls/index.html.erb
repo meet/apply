@@ -1,0 +1,9 @@
+<h1>Calls for Applications</h1>
+
+<table>
+<% @calls.sort_by { |c| c.app_class.model_name } .each do |call| %>
+  <tr><th><%= link_to call.app_class.model_name.human.titleize.pluralize, call_path(call) %></th>
+      <td><%= link_to openclose('applications', call.open), apply_path(:model => call.id) %></td>
+      <td><%= link_to openclose('reviews', call.reviewable), review_path(:model => call.id) %></td></tr>
+<% end %>
+</table>

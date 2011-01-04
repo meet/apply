@@ -1,0 +1,35 @@
+en:
+  helpers:
+    label:
+      business:
+        major: Major(s), program, or research area
+        status: MIT affiliation
+        graduation_year: Graduation year
+        why_meet:
+          Please describe in about 300 words why you want to participate in MEET.
+        experience:
+          What experience do you have that will make you an effective MEET business instructor?
+        teamwork:
+          Please describe your teamwork, leadership and project management experience.
+          What were your roles, contributions, strengths, and weaknesses?
+        limitations:
+          If you might have any time limitations this summer, please tell us about them.
+        anything_else:
+          Anything else you would like to mention?
+          Interests, talents, something you bring to the MEET team?
+        resume: "Please attach a copy of your resume as a PDF, plain text, or Word document:"
+        how_hear: How did you hear about MEET?
+  
+  activerecord:
+    models:
+      business: Business instructor
+    attributes:
+      business:
+        why_meet: Why MEET
+    
+    errors:
+      models:
+        business:
+          attributes:
+            resume:
+              blank: must be attached

@@ -12,28 +12,24 @@ class ApplicationController < ActionController::Base
     # Require an authenticated user, or initiate authentication. Also require SSL.
     def authenticate
       if not request.ssl?
-        render :file => 'public/403', :layout => false, :status => 403
-        return false
+        render :file => 'public/403', :layout => false, :status => 403 and return
       end
       
       if @current_user = session[:username]
-        return true
+        return
       end
       
       authorize_with_open_id(:required => [ :groups ]) do |result, identity_url, attributes|
         reset_session
-        if result.successful?
-          if attributes[:groups].include? 'allstaff'
-            @current_user = session[:username] = attributes[:username]
-            return true
-          else
-            render :file => 'public/403', :layout => false, :status => 403
-          end
+        if result.successful? and attributes[:groups].include? 'allstaff'
+          @current_user = session[:username] = attributes[:username]
+          redirect_to request.url
         else
-          render :text => result.message, :status => 403
+          @error = result.message || 'Staff only'
+          render 'application/error', :status => 403
         end
       end
-      return false
+      raise "Authentication failed but did not render or redirect" unless performed?
     end
     
     # Require a valid application call.

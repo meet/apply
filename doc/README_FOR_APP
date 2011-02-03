@@ -11,3 +11,4 @@ Simulate HTTPS requests by using http://127.0.0.1 instead of localhost.
   heroku config:add RAILS_SECRET_TOKEN=<long random string>
   heroku config:add EXCEPTIONAL_API_KEY=<key from getexceptional.com>
   heroku config:add OPENID_PROVIDER=<server URL>
+  heroku config:add PUBLIC_HOST=<hostname>

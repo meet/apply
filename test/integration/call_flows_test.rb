@@ -15,11 +15,12 @@ class CallFlowsTest < ActionController::IntegrationTest
   test "index should show calls after login" do
     open_session do |s|
       s.extend(OpenIdAuthorization::MockOpenIdFetcher::Session)
+      s.extend(ApplicationHelper)
       s.https!
       s.login '/calls', 'tom', 'allstaff'
       s.get s.response.redirect_url
       s.assert_select 'a[href=?]', call_path(calls(:panda))
-      s.assert_select 'a[href=?]', apply_path(calls(:panda))
+      s.assert_select 'a[href=?]', s.public_apply_url(:model => calls(:panda))
       s.assert_select 'a[href=?]', review_path(calls(:panda))
     end
   end

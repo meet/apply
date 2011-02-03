@@ -35,6 +35,8 @@ Apply::Application.configure do
   end
   config.middleware.insert 0, Development
   
+  ENV['PUBLIC_HOST'] = 'localhost:3000'
+  
   # Don't use secure session cookie
   config.session_store :cookie_store, :key => '_apply_session', :secure => false
   

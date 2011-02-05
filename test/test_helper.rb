@@ -12,7 +12,13 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 end
 
-# Panda table, model, and layout
+# Pandas
 require 'fixtures/migrations/create_pandas'
 require 'fixtures/models/panda'
+
+# Zookeepers and ZookeeperReviews
+require 'fixtures/migrations/create_zookeepers'
+require 'fixtures/models/zookeeper'
+
+# Layouts
 ActionController::Base.append_view_path 'test/fixtures/views'

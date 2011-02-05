@@ -1,0 +1,46 @@
+sally_alice:
+  app_reviewer_id: sally
+  app_id: 1
+  experience: 4
+  panda_whispering: 4
+  lions: false
+  tigers: false
+  comment: Interview
+
+sally_bob:
+  app_reviewer_id: sally
+  app_id: 2
+  experience: 4
+  panda_whispering: 4
+  lions: true
+  tigers: false
+  comment:
+
+sally_eve:
+  app_reviewer_id: sally
+  app_id: 3
+  experience: 2
+  panda_whispering: 2
+  lions: false
+  tigers: false
+  comment:
+
+ted_alice:
+  app_reviewer_id: ted
+  app_id: 1
+  experience: 4
+  panda_whispering: 5
+  lions: true
+  tigers: true
+  comment: I like her
+
+ted_bob:
+  app_reviewer_id: ted
+  app_id: 2
+  # No experience value
+  panda_whispering: 3
+  lions: true
+  tigers: false
+  comment: I like him
+
+# No ted_eve review

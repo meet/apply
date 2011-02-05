@@ -72,14 +72,22 @@ class AppIntegrationTest < ActionController::IntegrationTest
         # Check that responses appear on the review page
         downloads = {}
         fields.each do |field|
+          header = s.assert_select('h3', {
+            :text => CGI::escapeHTML(call.app_class.human_attribute_name(field.name)),
+            :minimum => 0
+          }).first
           if field.value.is_a? Rack::Test::UploadedFile
             path = download_path(:model => model, :app_id => 1, :column => field.name)
-            s.assert_select 'a[href=?]', path
+            s.assert_select header.parent, 'a[href=?]', path
             downloads[path] = field.value
+          elsif field.value == true or field.value == false
+            s.assert_select header.parent, 'p', field.value ? 'yes' : 'no'
           elsif field.name.to_s.ends_with? '_year'
-            s.assert_select 'p,h1,h2,h3', field.value.year.to_s
+            s.assert_select header.parent, 'p', field.value.year.to_s
+          elsif header
+            s.assert_select header.parent, 'p', field.value.to_s
           else
-            s.assert_select 'p,h1,h2,h3', field.value.to_s
+            s.assert_select 'h1', field.value.to_s
           end
         end
         

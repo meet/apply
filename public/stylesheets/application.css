@@ -29,3 +29,51 @@ input[type=submit] {
 .openclose-container .openclose-is-close { display: inline; cursor: pointer; }
 .openclose-container.openclose-open .openclose-is-open { display: inline; cursor: pointer; }
 .openclose-container.openclose-open .openclose-is-close { display: none; }
+
+#application {
+  margin-right: 3.5in;
+}
+
+#review {
+  position: fixed;
+  right: 0.5in;
+  top: 0.5in;
+  width: 3in;
+  margin-top: 2em;
+  font-size: smaller;
+}
+#review div {
+  margin-top: 0.5em;
+}
+#review table, #review table td {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: smaller;
+}
+#review .field_with_errors {
+  display: inline;
+  margin: 0;
+}
+#review-form-errors {
+  padding: 1em;
+  background: #fbb;
+}
+#review-form-errors ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#summary table, #summary table td {
+  margin: 0;
+  padding: 0 0.5em;
+  text-align: center;
+}
+.app-block-string, .app-block-integer, .app-block-date, .app-block-boolean {
+  margin: 1em 0;
+}
+.app-block-string > *, .app-block-integer > *, .app-block-date > *, .app-block-boolean > * {
+  margin: 0 1em 0 0;
+  display: inline;
+}

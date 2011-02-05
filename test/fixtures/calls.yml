@@ -5,3 +5,11 @@ panda:
   open: false
   reviewable: false
   identity_columns: name birthday
+
+zookeeper:
+  id: zookeeper
+  title: Zookeepers Needed
+  description:
+  open: false
+  reviewable: false
+  identity_columns: name

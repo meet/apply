@@ -8,7 +8,7 @@ Apply::Application.routes.draw do
   
   get 'review/:model' => 'review#index', :as => :review
   get 'review/:model/:app_id' => 'review#show_or_edit', :as => :review_app
-  put 'review/:model/:app_id' => 'review#update'
+  post 'review/:model/:app_id' => 'review#create_or_update'
   get 'review/:model/:app_id/download/:column' => 'review#download', :as => :download
   
   root :to => 'apply#new'

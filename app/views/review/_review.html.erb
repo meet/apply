@@ -1,0 +1,12 @@
+<div id="review">
+
+<h2>Your Review</h2>
+
+<% @call.review_class.form_columns.each do |c| %>
+  <div>
+  <%= @call.review_class.human_attribute_name(c.name) %>
+  <%= review_output @review, c %>
+  </div>
+<% end %>
+
+</div>

@@ -1,1 +1,11 @@
+<% content_for :title do %>
+<%= @call.app_class.model_name.human.titleize %> Application - <%= @call.identify(@app) %>
+<% end %>
+
+<% content_for :head do %>
+<%= stylesheet_link_tag 'print', :media => 'print' %>
+<% end %>
+
 <%= render :partial => 'app' %>
+
+<%= render :partial => 'form' %>

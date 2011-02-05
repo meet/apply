@@ -1,10 +1,32 @@
-<h1><%= @call.app_class.model_name.human.titleize %> Applicants</h1>
+<% content_for :title do %>
+<%= @call.app_class.model_name.human.titleize %> Applications
+<% end %>
 
-<p><%= pluralize @apps.size, 'applicant' %></p>
+<h1><%= @call.app_class.model_name.human.titleize %> Applications</h1>
+
+<p><%= pluralize @apps.size, 'applications' %></p>
+<% if @reviews %>
+  <% done = @reviews.find_all { |r| r.complete? } %>
+  <p>You have reviewed <%= done.size == @apps.size ? 'all' : done.empty? ? 'none' : done.size %> of them</p>
+<% end %>
 
 <table>
 <% @apps.each do |app| %>
-  <tr><td><%= link_to @call.identify(app), review_app_path(:app_id => app) %></td>
+  <tr>
+    <% if review = @reviews && @reviews.find { |r| r.app_id == app.id } %>
+      <% if review.complete? %>
+        <td style="color:#9d9" title="Review complete">&#x2713;</td>
+      <% else %>
+        <td style="color:#933" title="Review incomplete">&mdash;</td>
+      <% end %>
+    <% else %>
+      <% if @call.reviewable %>
+        <td title="Needs review">&rarr;</td>
+      <% else %>
+        <td>&nbsp;</td>
+      <% end %>
+    <% end %>
+    <td><%= link_to @call.identify(app), review_app_path(:app_id => app) %></td>
   </tr>
 <% end %>
 </table>

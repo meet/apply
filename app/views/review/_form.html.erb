@@ -1,0 +1,22 @@
+<%= form_for :review, :url => review_app_path, :html => { :id => 'review' } do |f| %>
+  
+  <% if @review.errors.any? %>
+    <div id="review-form-errors">
+    <ul>
+      <% @review.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+    </div>
+  <% end %>
+  
+  <% @call.review_class.form_columns.each do |c| %>
+    <div>
+    <%= f.label c.name %>
+    <%= review_input @call, :review, c %>
+    </div>
+  <% end %>
+  
+  <div><%= f.submit 'Save' %></div>
+  
+<% end %>

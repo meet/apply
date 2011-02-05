@@ -1,0 +1,8 @@
+en:
+  activerecord:
+    attributes:
+      instructor_review:
+        y1: Y1?
+        y2: Y2?
+        y3: Y3?
+        interview: Interview?

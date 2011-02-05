@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101222120001) do
+ActiveRecord::Schema.define(:version => 20110202120000) do
 
   create_table "businesses", :force => true do |t|
     t.string   "first_name",      :null => false
@@ -38,6 +38,24 @@ ActiveRecord::Schema.define(:version => 20101222120001) do
     t.date    "deadline"
     t.string  "identity_columns"
   end
+
+  create_table "instructor_reviews", :force => true do |t|
+    t.string   "app_reviewer_id", :null => false
+    t.integer  "app_id",          :null => false
+    t.integer  "enthusiasm"
+    t.integer  "programming"
+    t.integer  "teaching"
+    t.integer  "teamwork"
+    t.integer  "overall"
+    t.boolean  "y1"
+    t.boolean  "y2"
+    t.boolean  "y3"
+    t.boolean  "interview"
+    t.text     "comment"
+    t.datetime "created_at"
+  end
+
+  add_index "instructor_reviews", ["app_reviewer_id", "app_id"], :name => "index_instructor_reviews_on_app_reviewer_id_and_app_id", :unique => true
 
   create_table "instructors", :force => true do |t|
     t.string   "first_name",      :null => false

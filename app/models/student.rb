@@ -1,6 +1,8 @@
 # Student applications.
 class Student < ActiveRecord::Base
   
+  include Application
+  
   validates_presence_of :_student_first_name, :_student_last_name, :_student_id_number
   validates_inclusion_of :_student_gender, :in => [ 'Male', 'Female' ]
   validates_uniqueness_of :_student_id_number
@@ -60,7 +62,5 @@ class Student < ActiveRecord::Base
   validates_format_of :_parent_email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   
   validates_acceptance_of :_permission_to_apply, :accept => true
-  
-  default_scope order(:_student_first_name, :_student_last_name)
   
 end

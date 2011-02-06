@@ -1,6 +1,10 @@
 # Zookeeper application model
 class Zookeeper < ActiveRecord::Base
+  
+  include Application
+  
   validates_presence_of :name
+  
 end
 
 # Reviews of zookeeper applications

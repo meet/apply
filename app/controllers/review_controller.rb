@@ -6,7 +6,7 @@ class ReviewController < ApplicationController
   
   # List of submitted applications.
   def index
-    @apps = @call.app_class.all
+    @apps = @call.app_class.all(:select => @call.identity_columns_a << :id)
     if @call.reviewable
       srand @current_user.bytes.reduce(0x100, :^)
       @apps = @apps.sort_by { rand }

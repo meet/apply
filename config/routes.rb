@@ -11,6 +11,8 @@ Apply::Application.routes.draw do
   post 'review/:model/:app_id' => 'review#create_or_update'
   get 'review/:model/:app_id/download/:column' => 'review#download', :as => :download
   
+  get 'export/:model' => 'export#index', :as => :export
+  
   root :to => 'apply#new'
   get ':model' => 'apply#new', :as => :apply
   post ':model' => 'apply#create'

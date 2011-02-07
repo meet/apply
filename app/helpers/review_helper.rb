@@ -2,7 +2,7 @@ module ReviewHelper
   
   def app_response(app, col)
     content = app[col.name]
-    return '&mdash;'.html_safe if content == nil or content == ''
+    return nil if content == nil or content == ''
     
     case col.type
     when :date

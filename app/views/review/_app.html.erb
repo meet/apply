@@ -6,7 +6,7 @@
   <% next if @call.identity_columns_a.include? c.name %>
   <div class="app-block-<%= c.type %>">
   <h3><%= @call.app_class.human_attribute_name(c.name) %></h3>
-  <p><%= app_response(@app, c) %></p>
+  <p><%= app_response(@app, c) || '&mdash;'.html_safe %></p>
   </div>
 <% end %>
 

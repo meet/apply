@@ -19,7 +19,7 @@ module ReviewHelper
       return app[col.name] ? 'yes' : 'no'
       
     when :binary
-      return link_to 'download', download_path(:column => col.name)
+      return link_to 'download', download_path(:app_id => app.id, :column => col.name)
       
     else
       return app[col.name]

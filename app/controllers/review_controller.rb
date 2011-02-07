@@ -24,7 +24,7 @@ class ReviewController < ApplicationController
     elsif @call.review_class
       # Reviews are closed
       @review = @call.review_class.find_by_app_reviewer_id_and_app_id(@current_user, @app.id)
-      @summary = @call.review_class.summarize(@app.id)
+      @summary = @call.review_class.summarize(@app)
       render :show
     else
       # No reviewing

@@ -27,12 +27,13 @@ module Review
     end
     
     # Compute a summary of reviews for the given application.
-    def summarize(app_id)
-      reviews = self.where(:app_id => app_id)
+    def summarize(app)
+      reviews = self.where(:app_id => app.id)
       return nil if reviews.empty?
       
       # Quacks like a review model instance, but values are not typecast
-      summary = Struct.new(*form_columns.map { |c| c.name.to_sym }).new
+      summary = Struct.new(*(form_columns.map { |c| c.name.to_sym } << :app)).new
+      summary.app = app
       form_columns.each do |c|
         nonempty = reviews.find_all { |r| r[c.name] != nil and r[c.name] != '' }
         case c.type

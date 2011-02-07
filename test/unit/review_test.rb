@@ -23,21 +23,24 @@ class ReviewTest < ActiveSupport::TestCase
   end
   
   test "summarizing" do
-    alice = calls(:zookeeper).review_class.summarize(zookeepers(:alice).id)
+    alice = calls(:zookeeper).review_class.summarize(zookeepers(:alice))
+    assert_equal zookeepers(:alice), alice.app
     assert_equal 4, alice.experience
     assert_equal 4.5, alice.panda_whispering
     assert_equal 0.5, alice.lions
     assert_equal 0.5, alice.tigers
     assert_equal({ 'sally' => 'Interview', 'ted' => 'I like her' }, alice.comment)
     
-    bob = calls(:zookeeper).review_class.summarize(zookeepers(:bob).id)
+    bob = calls(:zookeeper).review_class.summarize(zookeepers(:bob))
+    assert_equal zookeepers(:bob), bob.app
     assert_equal 4, bob.experience
     assert_equal 3.5, bob.panda_whispering
     assert_equal 1, bob.lions
     assert_equal 0, bob.tigers
     assert_equal({ 'ted' => 'I like him' }, bob.comment)
     
-    eve = calls(:zookeeper).review_class.summarize(zookeepers(:eve).id)
+    eve = calls(:zookeeper).review_class.summarize(zookeepers(:eve))
+    assert_equal zookeepers(:eve), eve.app
     assert_equal 2, eve.experience
     assert_equal 2, eve.panda_whispering
     assert_equal 0, eve.lions

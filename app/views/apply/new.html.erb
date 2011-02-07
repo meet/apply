@@ -5,6 +5,10 @@
 
 <p id="apply-form-description"><%= @call.description %></p>
 
+<% if @late %>
+<p id="apply-form-notice">User <%= @current_user %> adding late application</p>
+<% end %>
+
 <% if @app.errors.any? %>
   <div id="apply-form-errors">
   <p><%= pluralize @app.errors.count, 'error' %> prevented your application from being received:</p>

@@ -5,12 +5,13 @@ class ApplyController < ApplicationController
   
   before_filter :call
   before_filter :preview
+  before_filter :late
   
   layout :call_layout
   
   # Render the application form.
   def new
-    if @call.open
+    if @call.open || (@late && @current_user)
       @app = @call.app_class.new
       render :new
     else
@@ -32,6 +33,12 @@ class ApplyController < ApplicationController
     
     def preview
       @preview = params[:preview] != nil
+    end
+    
+    def late
+      if @late = params[:late] != nil
+        authenticate
+      end
     end
     
     # Set view layout based on the current application call.

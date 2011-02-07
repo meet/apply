@@ -4,7 +4,7 @@
 
 <h1><%= @call.app_class.model_name.human.titleize %> Applications</h1>
 
-<p><%= pluralize @apps.size, 'applications' %></p>
+<p><%= pluralize @apps.size, 'application' %></p>
 <% if @reviews %>
   <% done = @reviews.find_all { |r| r.complete? } %>
   <p>You have reviewed <%= done.size == @apps.size ? 'all' : done.empty? ? 'none' : done.size %> of them</p>

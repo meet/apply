@@ -54,4 +54,17 @@ class ApplyControllerTest < ActionController::TestCase
     assert_select 'form[action=?]', apply_path(:model => 'panda', :preview => true)
   end
   
+  test "should deny unauthenticated late application" do
+    get :new, :model => 'panda', :late => 'true'
+    assert_response :forbidden
+  end
+  
+  test "should allow authenticated late application" do
+    request.env['HTTPS'] = 'on'
+    get :new, { :model => 'panda', :late => 'true' }, { :username => 'maxg' }
+    assert_response :success
+    assert_template 'apply/new'
+    assert_select 'p', /late/
+  end
+  
 end

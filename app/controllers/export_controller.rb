@@ -6,7 +6,7 @@ class ExportController < ApplicationController
   
   # Export all submitted applications.
   def index
-    @apps = @call.app_class.all
+    @apps = @call.app_class.unscoped.all(:order => :id)
   end
   
 end

@@ -4,7 +4,10 @@
 
 <h1><%= @call.app_class.model_name.human.titleize %> Applications</h1>
 
-<p><%= pluralize @apps.size, 'application' %></p>
+<p>
+<%= pluralize @apps.size, 'application' %> - 
+<%= link_to 'export to csv', export_path(:format => :csv) %>
+</p>
 <% if @reviews %>
   <% done = @reviews.find_all { |r| r.complete? } %>
   <p>You have reviewed <%= done.size == @apps.size ? 'all' : done.empty? ? 'none' : done.size %> of them</p>

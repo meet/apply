@@ -5,11 +5,6 @@ module ApplyHelper
     '<a href="mailto:info@meet.mit.edu">info@meet.mit.edu</a>'.html_safe
   end
   
-  # Returns model columns to include in the form.
-  def app_form_columns(call)
-    call.app_class.content_columns.reject { |c| c.name == 'created_at' }
-  end
-  
   # Returns a form tag (input, select, etc.) for the given column.
   def app_input(call, name, col)
     validators = call.app_class.validators_on(col.name)

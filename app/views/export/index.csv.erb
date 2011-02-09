@@ -2,7 +2,7 @@
 Count,<%= @apps.size %>
 Exported,"<%= Time.now %>"
 
-ID<% app_export_columns(@call).each { |c| %>,"<%= @call.app_class.human_attribute_name(c.name) %>"<% } %>
+ID<% @call.app_class.export_columns.each { |c| %>,"<%= @call.app_class.human_attribute_name(c.name) %>"<% } %>
 <% @apps.each do |app| %>
-<%= app.id %><% app_export_columns(@call).each { |c| %>,"<%= app_response(app, c) %>"<% } %>
+<%= app.id %><% @call.app_class.export_columns.each { |c| %>,"<%= app_response(app, c) %>"<% } %>
 <% end %>

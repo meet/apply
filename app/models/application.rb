@@ -7,6 +7,16 @@ module Application
       Call.where(:id => name.downcase).first
     end
     
+    # Content columns to include in application form.
+    def form_columns
+      content_columns.reject { |c| c.name == 'created_at' }
+    end
+    
+    # Content columns to include in exports.
+    def export_columns
+      content_columns.reject { |c| [ :text, :binary ].include? c.type }
+    end
+    
     # Should be private
     
     def order_by_identity_columns

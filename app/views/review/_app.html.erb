@@ -2,7 +2,7 @@
   
 <h1><%= @call.identify(@app) %></h1>
 
-<% app_form_columns(@call).each do |c| %>
+<% @call.app_class.form_columns.each do |c| %>
   <% next if @call.identity_columns_a.include? c.name %>
   <div class="app-block-<%= c.type %>">
   <h3><%= @call.app_class.human_attribute_name(c.name) %></h3>

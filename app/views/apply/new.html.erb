@@ -23,7 +23,7 @@
 <%= form_for :app, :url => apply_path(@call.id, @preview ? { :preview => true } : {}), :html => { :multipart => true } do |f| %>
   <table id="apply-form-table">
   <% last_section = nil %>
-  <% app_form_columns(@call).each do |c| %>
+  <% @call.app_class.form_columns.each do |c| %>
     
     <% section = c.name[/^_(.*?)_/, 1] %>
     <% if section and section != last_section %>

@@ -65,11 +65,12 @@ input[type=submit] {
   padding: 0;
 }
 
-#summary table, #summary table td {
-  margin: 0;
+.app-summary table, .app-summary table td {
+  margin: 1em 0;
   padding: 0 0.5em;
   text-align: center;
 }
+
 .app-block-string, .app-block-integer, .app-block-date, .app-block-boolean {
   margin: 1em 0;
 }

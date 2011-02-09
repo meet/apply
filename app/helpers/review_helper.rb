@@ -27,6 +27,27 @@ module ReviewHelper
     end
   end
   
+  def app_summary_response(call, app, col)
+    content = app[col.name]
+    return nil if content == nil or content == ''
+    
+    case col.type
+    when :text
+      return link_to_function('&para;'.html_safe) do |page|
+        page.call('summary_reveal', call.identify(app),
+                                    app.class.human_attribute_name(col.name),
+                                    app_response(app, col))
+      end
+      
+    when :binary
+      return link_to '&darr;'.html_safe, download_path(:app_id => app.id, :column => col.name)
+      
+    else
+      return app_response(app, col)
+      
+    end
+  end
+  
   # Returns a form tag (input, radio buttons, etc.) for the given column.
   def review_input(call, name, col)
     case col.type
@@ -66,14 +87,37 @@ module ReviewHelper
     end
   end
   
-  def format_float(f)
-    return '&mdash;'.html_safe if f == nil
-    sprintf("%.1f", f).sub(/\.?0+$/,'')
+  def review_summary_output(call, summary, col)
+    return nil if summary == nil
+    content = summary[col.name]
+    return nil if content == nil or content == {}
+    
+    case col.type
+    when :integer
+      sprintf("%.1f", content).sub(/\.?0+$/,'')
+      
+    when :boolean
+      sprintf("%.0f", content*100)
+      
+    else
+      return link_to_function('&para;'.html_safe) do |page|
+        page.call('summary_reveal', call.identify(summary.app),
+                                    call.review_class.human_attribute_name(col.name).pluralize,
+                                    review_summary_full_output(summary, col))
+      end
+      
+    end
   end
   
-  def format_percent(f)
-    return '&mdash;'.html_safe if f == nil
-    sprintf("%.0f", f*100)
+  def review_summary_full_output(summary, col)
+    return nil if summary == nil
+    content = summary[col.name]
+    return nil if content == nil
+    
+    content.keys.sort.map do |username|
+      content_tag(:p,
+        content_tag(:b, username) + ': ' + content[username])
+    end .join.html_safe
   end
   
 end

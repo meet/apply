@@ -20,6 +20,11 @@ module Review
       content_columns.reject { |c| c.name == 'created_at' }
     end
     
+    # Content columns that will be summarized to a number.
+    def numeric_summary_columns
+      form_columns.find_all { |c| [ :integer, :boolean ].include? c.type }
+    end
+    
     # Options specified by validates_inclusion_of.
     def column_options(col)
       validators = validators_on(col.name)

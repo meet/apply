@@ -1,6 +1,13 @@
 # Module to include in application model classes.
 module Application
   
+  def as_json(options = {})
+    json = Hash[self.class.export_columns.map { |c| [ c.name, self[c.name] ] }]
+    json[:id] = id
+    json[:identity] = self.class.call.identify(self)
+    return json
+  end
+  
   module ApplicationClass
     
     def call

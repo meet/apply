@@ -1,0 +1,106 @@
+<% content_for :title do %>
+<%= @call.app_class.model_name.human.titleize %> Reviews Scatterplot Matrix
+<% end %>
+
+<% content_for :head do %>
+<%= stylesheet_link_tag 'summary' %>
+<%= javascript_include_tag 'protovis-r3.2' %>
+<%= javascript_tag "var data = #{@json};" %>
+<% end %>
+
+<div id="figure">
+<script type="text/javascript+protovis">
+// Based on http://vis.stanford.edu/protovis/ex/flowers.html
+// and http://vis.stanford.edu/protovis/ex/point.html
+
+var properties = data.properties.map(function(p) p.name);
+var names = {};
+data.properties.each(function(p) names[p.name] = p.display);
+var summaries = data.summaries;
+var toggles = data.toggles;
+
+var pad = 20;
+var extra = 80;
+var size = ($('figure').getWidth() - extra) / properties.size() - pad;
+
+var position = pv.dict(properties, function(p) pv.Scale.linear(summaries, function(s) s[p]).range(0, size));
+var color = { // color based on toggle state
+  up: 'rgba(0%, 60%, 0%, .6)',
+  down: 'rgba(60%, 0%, 0%, .6)',
+  neutral: 'rgba(60%, 60%, 0%, .5)'
+}
+
+var vis = new pv.Panel()
+    .width((size + pad) * properties.length)
+    .height((size + pad) * properties.length + pad)
+    .left(pad)
+    .right(extra)
+    .top(pad)
+    .bottom(pad)
+    .event('all')
+    .event('mousemove', pv.Behavior.point());
+
+var cell = vis.add(pv.Panel) // columns
+    .data(properties)
+    .top(function() this.index * (size + pad) + pad / 2)
+    .height(size)
+    .add(pv.Panel) // rows
+    .data(function(y) properties.map(function(x) ({ px: x, py: y}) ))
+    .left(function() this.index * (size + pad) + pad / 2)
+    .width(size);
+
+var plot = cell.add(pv.Panel)
+    .visible(function (t) t.px != t.py) // don't show along diagonal
+    .strokeStyle('#aaa');
+
+var x_tick = plot.add(pv.Rule)
+    .data(function(t) position[t.px].ticks(5))
+    .left(function(d, t) position[t.px](d))
+    .strokeStyle('#eee');
+
+x_tick.anchor('bottom').add(pv.Label)
+    .visible(function() (cell.parent.index == properties.length - 1) && !(cell.index & 1))
+    .text(function(d, t) position[t.px].tickFormat(d));
+
+x_tick.anchor('top').add(pv.Label)
+    .visible(function() (cell.parent.index == 0) && (cell.index & 1))
+    .text(function(d, t) position[t.px].tickFormat(d));
+
+var y_tick = plot.add(pv.Rule)
+    .data(function(t) position[t.py].ticks(5))
+    .bottom(function(d, t) position[t.py](d))
+    .strokeStyle('#eee');
+
+y_tick.anchor('left').add(pv.Label)
+    .visible(function() (cell.index == 0) && (cell.parent.index & 1))
+    .text(function(d, t) position[t.py].tickFormat(d));
+
+y_tick.anchor('right').add(pv.Label)
+    .visible(function() (cell.index == properties.length - 1) && !(cell.parent.index & 1))
+    .text(function(d, t) position[t.py].tickFormat(d));
+
+var dot = plot.add(pv.Dot)
+    .def('active', -1)
+    .data(summaries)
+    .left(function(d, t) position[t.px](d[t.px]))
+    .bottom(function(d, t) position[t.py](d[t.py]))
+    .size(10)
+    .strokeStyle(null)
+    .fillStyle(function(d) color[toggles[d.app.id] || 'neutral'])
+    .event('point', function() this.active(this.index).parent)
+    .event('unpoint', function() this.active(-1).parent)
+    .anchor('right')
+    .add(pv.Label)
+    .font('12px sans-serif')
+    .visible(function() this.anchorTarget().active() == this.index)
+    .text(function(d) d.app.identity);
+
+cell.anchor('center').add(pv.Label)
+    .visible(function(t) t.px == t.py) // only show along diagonal
+    .font('bold 14px sans-serif')
+    .text(function(t) names[t.px]);
+
+vis.render();
+
+</script>
+</div>

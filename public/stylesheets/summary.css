@@ -1,0 +1,99 @@
+#summary-table {
+  width: 99%;
+  font-size: smaller;
+  margin-top: 1in;
+  border-spacing: 0;
+}
+
+#summary-table th {
+  font-weight: normal;
+  white-space: nowrap;
+}
+#summary-table .column-header div {
+  position: absolute;
+  -webkit-transform: translate(1em, -0.5em) rotate(-55deg);
+  -webkit-transform-origin: bottom left;
+  -moz-transform: translate(1em, -0.5em) rotate(-55deg);
+  -moz-transform-origin: bottom left;
+  transform: translate(1em, -0.5em) rotate(-55deg);
+  transform-origin: bottom left;
+}
+#summary-table .column-footer div {
+  position: absolute;
+  padding-left: -5em;
+  -webkit-transform: translate(-100%, -0.5em) rotate(-55deg);
+  -webkit-transform-origin: top right;
+  -moz-transform: translate(-100%, -0.5em) rotate(-55deg);
+  -moz-transform-origin: top right;
+  transform: translate(-100%, -0.5em) rotate(-55deg);
+  transform-origin: top right;
+}
+
+#summary-table td {
+  padding: 2px;
+}
+#summary-table .shrink {
+  max-width: 1in;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#summary-table a {
+  text-decoration: none;
+}
+#summary-table a:hover {
+  text-decoration: underline;
+}
+
+#summary-table .app-row:hover { background: #ffd; }
+
+.visualize-toggle-up { background: #efe; }
+#summary-table .visualize-toggle-up:hover { background: #ded; }
+.visualize-toggle-down { background: #fee; }
+#summary-table .visualize-toggle-down:hover { background: #edd; }
+
+.visualize-toggle-up a.visualize-toggle:after {
+  content:"\00a0\2191\00a0";
+}
+.visualize-toggle-down a.visualize-toggle:after {
+  content:"\00a0\2193\00a0";
+}
+.visualize-toggle-neutral a.visualize-toggle:after {
+  content:"\00a0\2013\00a0";
+}
+
+#summary-reveal {
+  position: fixed;
+  background: white;
+  width: 50%;
+  max-width: 5in;
+  left: 2in;
+  bottom: 0.5in;
+  border: 1px solid #333;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  font-size: smaller;
+}
+#summary-reveal h2, h3, p {
+  margin: 5px;
+  padding: 0;
+}
+
+#figure { width: 100%; }
+#x_axis, #y_axis, #z_axis { position: relative; }
+#x_axis { left: -50px; }
+
+#details {
+  position: absolute;
+  width: 3in;
+  right: 0.5in;
+  overflow: hidden;
+  font-size: 8pt;
+}
+#details a {
+  font-size: larger;
+  font-weight: bold;
+}
+#details h2, #details table {
+  display: none;
+}

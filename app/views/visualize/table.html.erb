@@ -1,0 +1,65 @@
+<% content_for :title do %>
+<%= @call.app_class.model_name.human.titleize %> Reviews Table
+<% end %>
+
+<% content_for :head do %>
+<%= stylesheet_link_tag 'summary' %>
+<%= javascript_include_tag 'summary' %>
+<script type="text/javascript">
+// Called via AJAX when an application's state is toggled.
+var visualize_toggle = visualize_toggle_style;
+</script>
+<% end %>
+
+<table id="summary-table">
+<tr>
+<td>&nbsp;</td>
+<th class="column-header"><div><%= link_to_function 'Applicant', 'table_sort(event)' %></div></th>
+<% @call.app_class.form_columns.each do |c| %>
+  <% next if @call.identity_columns_a.include? c.name %>
+  <th class="column-header">
+  <div>
+  <%= link_to_function @call.app_class.human_attribute_name(c.name), 'table_sort(event)' %>
+  <%= link_to_function '&nbsp;&bull;&nbsp;'.html_safe, 'table_hide(event)' %>
+  </div>
+  </th>
+<% end %>
+<td></td>
+<% @call.review_class.form_columns.each do |c| %>
+  <th class="column-header">
+  <div><%= link_to_function @call.review_class.human_attribute_name(c.name), 'table_sort(event)' %></div>
+  </th>
+<% end %>
+</tr>
+<% @apps.each do |app| %>
+  <tr class="app-row app-<%= app.id %> visualize-toggle-<%= @toggles[app.id] %>">
+  <td><%= link_to '', visualize_path(:action => :toggle, :app_id => app), :remote => true,
+                  :class => 'visualize-toggle' %></td>
+  <th><%= link_to @call.identify(app), review_app_path(:app_id => app) %></th>
+  <% @call.app_class.form_columns.each do |c| %>
+    <% next if @call.identity_columns_a.include? c.name %>
+    <td><div class="shrink"><%= app_summary_response(@call, app, c) %></div></td>
+  <% end %>
+  <td></td>
+  <% @call.review_class.form_columns.each do |c| %>
+    <td><div class="shrink"><%= review_summary_output(@call, @summaries[app.id], c) %></div></td>
+  <% end %>
+  </tr>
+<% end %>
+<tr>
+<td>&nbsp;</td>
+<th class="column-footer"><div><%= link_to_function 'Applicant', 'table_sort(event)' %></div></th>
+<% @call.app_class.form_columns.each do |c| %>
+  <% next if @call.identity_columns_a.include? c.name %>
+  <th class="column-footer">
+  <div><%= link_to_function @call.app_class.human_attribute_name(c.name), 'table_sort(event)' %></div>
+  </th>
+<% end %>
+<td></td>
+<% @call.review_class.form_columns.each do |c| %>
+  <th class="column-footer">
+  <div><%= link_to_function @call.review_class.human_attribute_name(c.name), 'table_sort(event)' %></div>
+  </th>
+<% end %>
+</tr>
+</table>

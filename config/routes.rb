@@ -13,6 +13,8 @@ Apply::Application.routes.draw do
   
   get 'export/:model' => 'export#index', :as => :export
   
+  get 'visualize/:model/:action' => 'visualize', :as => :visualize
+  
   root :to => 'apply#new'
   get ':model' => 'apply#new', :as => :apply
   post ':model' => 'apply#create'

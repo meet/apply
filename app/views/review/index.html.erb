@@ -12,6 +12,14 @@
   <% done = @reviews.find_all { |r| r.complete? } %>
   <p>You have reviewed <%= done.size == @apps.size ? 'all' : done.empty? ? 'none' : done.size %> of them</p>
 <% end %>
+<% if @call.review_class and not @call.reviewable %>
+  <p>
+  <%= pluralize @call.review_class.count, 'review' %> total -
+  <%= link_to 'table', visualize_path(:action => :table) %> -
+  <%= link_to 'scatter', visualize_path(:action => :scatter) %> -
+  <%= link_to 'splom', visualize_path(:action => :splom) %>
+  </p>
+<% end %>
 
 <table>
 <% @apps.each do |app| %>

@@ -1,0 +1,158 @@
+<% content_for :title do %>
+<%= @call.app_class.model_name.human.titleize %> Reviews Scatterplot
+<% end %>
+
+<% content_for :head do %>
+<%= stylesheet_link_tag 'summary' %>
+<%= javascript_include_tag 'summary' %>
+<%= javascript_include_tag 'protovis-r3.2' %>
+<%= javascript_tag "var data = #{@json};" %>
+<script type="text/javascript">
+document.observe("dom:loaded", function() {
+  // Fit the visualization to the window.
+  var height = (document.viewport.getHeight() - $('figure').viewportOffset().top - 50) + 'px'
+  $('figure').setStyle({ height: height });
+  $('details').setStyle({ height: height });
+  
+  // Save and re-render when axes change.
+  $$('select').each(function(elt) {
+    elt.on('change', function() {
+      new Ajax.Request('<%= visualize_path(:action => :axis) %>', {
+        method: 'GET',
+        parameters: { axis: elt.id, value: elt.getValue() }
+      });
+      install_and_render();
+    });
+  });
+});
+
+// Called via AJAX when an application's state is toggled.
+function visualize_toggle(app_id, old_state, new_state) {
+  visualize_toggle_style(app_id, old_state, new_state);
+  toggles[app_id] = new_state;
+  install_and_render();
+}
+</script>
+<% end %>
+
+<div id="details">
+</div>
+
+<% options = @call.review_class.numeric_summary_columns.map { |c| [ @call.review_class.human_attribute_name(c.name), c.name ] } %>
+
+<%= select_tag :y_axis, options_for_select(options, @axes['y_axis']), :include_blank => true %>
+<div id="figure">
+<script type="text/javascript+protovis">
+// Based on http://vis.stanford.edu/protovis/ex/dot.html
+
+var properties = data.properties.map(function(p) p.name);
+var summaries = data.summaries;
+var toggles = data.toggles;
+
+var x_axis, y_axis, z_axis;
+
+var pad = 20;
+var extra = 80;
+var size = Math.min($('figure').getHeight() - 2*pad, $('figure').getWidth() - $('details').getWidth() - extra);
+
+var position = pv.dict(properties, function(p) pv.Scale.linear(summaries, function(s) s[p]).range(0, size));
+var scale = pv.dict(properties, function(p) pv.Scale.linear(summaries, function(s) s[p]).range(5, 60));
+var color = pv.dict(properties, function(p) pv.Scale.linear(summaries, function(s) s[p]).range('blue', 'red'));
+
+var vis = new pv.Panel()
+    .width(size)
+    .height(size)
+    .left(pad)
+    .right(extra)
+    .top(pad)
+    .bottom(pad);
+
+var x_ticks = vis.add(pv.Rule)
+    .strokeStyle('#fff');
+var x_label = x_ticks
+    .anchor('bottom')
+    .add(pv.Label);
+
+var y_ticks = vis.add(pv.Rule)
+    .strokeStyle('#fff');
+var y_label = y_ticks
+    .anchor('left')
+    .add(pv.Label);
+
+// Install data in the visualization. Self-destructing function.
+var install = function() {
+  install = function() {}
+  
+  vis.add(pv.Dot)
+      .data(summaries)
+      .left(function(d) position[x_axis](d[x_axis]))
+      .bottom(function(d) position[y_axis](d[y_axis]))
+      .strokeStyle(function(d) z_axis ? color[z_axis](d[z_axis]) : 'green')
+      .fillStyle(function() this.strokeStyle().alpha(.2))
+      .size(function(d) z_axis ? scale[z_axis](d[z_axis]) : 15)
+      .shape(function(d) toggles[d.app.id] == 'up' || toggles[d.app.id] == 'down' ? 'triangle' : 'circle')
+      .angle(function(d) toggles[d.app.id] == 'up' ? Math.PI : 0)
+      .cursor('pointer')
+      .event('click', details)
+      .anchor('center') // rotate overlapping labels around center
+      .add(pv.Panel) // but aligned on the right
+      .add(pv.Label)
+      .font('10px')
+      .textBaseline('middle')
+      .textAngle(function(d) -Math.PI/18 + d._overlap_index * Math.PI/9)
+      .textMargin(8)
+      .text(function(d) d.app.identity);
+}
+
+// (Re-)render the visualization.
+function render() {
+  x_ticks.data(position[x_axis].ticks())
+      .left(position[x_axis])
+      .strokeStyle("#eee");
+  x_label.text(position[x_axis].tickFormat);
+  y_ticks.data(position[y_axis].ticks())
+      .bottom(position[y_axis])
+      .strokeStyle("#eee");
+  y_label.text(position[y_axis].tickFormat);
+  
+  var overlap = {}
+  summaries.each(function(s) {
+    var coord = s[x_axis] + 'x' + s[y_axis];
+    if ( ! overlap[coord]) { overlap[coord] = []; }
+    s._overlap_index = overlap[coord].size();
+    s._overlapping = overlap[coord];
+    overlap[coord].push(s);
+  });
+  
+  vis.render();
+}
+
+// If axes are selected, install and render the visualization.
+function install_and_render() {
+  x_axis = $('x_axis').getValue();
+  y_axis = $('y_axis').getValue();
+  z_axis = $('z_axis').getValue();
+  if (x_axis && y_axis) {
+    install();
+    render();
+  }
+}
+
+// Show details for the application, and any it overlaps.
+function details(d) {
+  d._overlapping.each(function(summary) {
+    new Ajax.Request('<%= visualize_path(:action => :details) %>', {
+      method: 'GET',
+      parameters: { app_id: summary.app.id }
+    });
+  });
+}
+
+vis.render(); // blank visualization
+install_and_render(); // try render from session values
+
+</script>
+<%= select_tag :x_axis, options_for_select(options, @axes['x_axis']), :include_blank => true %>
+<br/>
+<%= select_tag :z_axis, options_for_select(options, @axes['z_axis']), :include_blank => true %>
+</div>

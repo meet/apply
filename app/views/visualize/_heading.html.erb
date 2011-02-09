@@ -1,0 +1,5 @@
+<div class="app-<%= @app.id %> visualize-toggle-<%= @toggles[@app.id] %>">
+<%= link_to '', visualize_path(:action => :toggle, :app_id => @app), :remote => true,
+                :class => 'visualize-toggle' %>
+<%= link_to @call.identify(@app), review_app_path(:app_id => @app) %>
+</div>

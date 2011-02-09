@@ -1,4 +1,4 @@
-<div id="summary">
+<div class="app-summary">
 
 <h2>Review Summary</h2>
 
@@ -8,24 +8,22 @@
 <table><tr>
 <% number_cols.each { |c| %><td><%= @call.review_class.human_attribute_name(c.name) %></td><% } %>
 </tr><tr>
-<% number_cols.each { |c| %><td><%= format_float @summary[c.name] %>
+<% number_cols.each { |c| %><td>
+  <%= review_summary_output(@call, @summary, c) || '&mdash;'.html_safe %>
   <small>/ <%= @call.review_class.column_options(c).map { |o| o.to_i } .max %></small></td><% } %>
 </tr></table>
-
-<br/>
 
 <% boolean_cols, rest_cols = rest_cols.partition { |c| c.type == :boolean } %>
 <table><tr>
 <% boolean_cols.each { |c| %><td><%= @call.review_class.human_attribute_name(c.name) %></td><% } %>
 </tr><tr>
-<% boolean_cols.each { |c| %><td><%= format_percent @summary[c.name] %><small>%</small></td><% } %>
+<% boolean_cols.each { |c| %><td>
+  <%= review_summary_output(@call, @summary, c) || '&mdash;'.html_safe %><small>%</small></td><% } %>
 </tr></table>
 
 <% rest_cols.each do |c| %>
   <h3><%= @call.review_class.human_attribute_name(c.name).pluralize %></h3>
-  <% @summary[c.name].keys.sort.each do |username| %>
-    <p><b><%= username %></b>: <%= @summary[c.name][username] %></p>
-  <% end %>
+  <%= review_summary_full_output(@summary, c) %>
 <% end %>
 
 </div>

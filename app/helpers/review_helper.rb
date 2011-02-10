@@ -34,7 +34,8 @@ module ReviewHelper
     case col.type
     when :text
       return link_to_function('&para;'.html_safe) do |page|
-        page.call('summary_reveal', call.identify(app),
+        page.call('summary_reveal', page.literal('event'),
+                                    call.identify(app),
                                     app.class.human_attribute_name(col.name),
                                     app_response(app, col))
       end
@@ -101,7 +102,8 @@ module ReviewHelper
       
     else
       return link_to_function('&para;'.html_safe) do |page|
-        page.call('summary_reveal', call.identify(summary.app),
+        page.call('summary_reveal', page.literal('event'),
+                                    call.identify(summary.app),
                                     call.review_class.human_attribute_name(col.name).pluralize,
                                     review_summary_full_output(summary, col))
       end

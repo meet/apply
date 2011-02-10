@@ -9,7 +9,7 @@ function visualize_toggle_style(app_id, old_state, new_state) {
   });
 }
 
-function summary_reveal(identity, field, html) {
+function summary_reveal(event, identity, field, html) {
   if ($('summary-reveal')) {
     $('summary-reveal').remove();
   }

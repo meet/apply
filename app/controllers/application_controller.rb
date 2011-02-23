@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
       
       authorize_with_open_id(:required => [ :groups ]) do |result, identity_url, attributes|
         reset_session
-        if result.successful? and attributes[:groups].include? 'allstaff'
+        if result.successful? and attributes[:groups].include? 'all-staff'
           @current_user = session[:username] = attributes[:username]
           redirect_to request.url
         else

@@ -66,7 +66,7 @@ class AppIntegrationTest < ActionController::IntegrationTest
         # Log in
         s.extend(OpenIdAuthorization::MockOpenIdFetcher::Session)
         s.https!
-        s.login "/review/#{model}/1", 'root', 'allstaff'
+        s.login "/review/#{model}/1", 'root', 'all-staff'
         s.get s.response.redirect_url
         
         # Check that responses appear on the review page

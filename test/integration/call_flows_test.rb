@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CallFlowsTest < ActionController::IntegrationTest
   
-  test "index should require allstaff membership" do
+  test "index should require all-staff membership" do
     open_session do |s|
       s.extend(OpenIdAuthorization::MockOpenIdFetcher::Session)
       s.https!
@@ -17,7 +17,7 @@ class CallFlowsTest < ActionController::IntegrationTest
       s.extend(OpenIdAuthorization::MockOpenIdFetcher::Session)
       s.extend(ApplicationHelper)
       s.https!
-      s.login '/calls', 'tom', 'allstaff'
+      s.login '/calls', 'tom', 'all-staff'
       s.get s.response.redirect_url
       s.assert_select 'a[href=?]', call_path(calls(:panda))
       s.assert_select 'a[href=?]', s.public_apply_url(:model => calls(:panda))

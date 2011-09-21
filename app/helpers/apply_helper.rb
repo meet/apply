@@ -52,7 +52,7 @@ module ApplyHelper
     text = text.gsub /[^ ].*?[\.\?]/ do |s|
       content_tag :span, s, :style => 'white-space: nowrap'
     end
-    label object_name, method, text
+    label object_name, method, text.html_safe
   end
   
 end

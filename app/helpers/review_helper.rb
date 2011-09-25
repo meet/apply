@@ -4,7 +4,7 @@ module ReviewHelper
     content = app[col.name]
     return nil if content == nil or content == ''
     
-    case col.type
+    case col.field_type
     when :date
       if col.name.ends_with? '_year'
         return app[col.name].year
@@ -18,8 +18,8 @@ module ReviewHelper
     when :boolean
       return app[col.name] ? 'yes' : 'no'
       
-    when :binary
-      return link_to 'download', download_path(:app_id => app.id, :column => col.name)
+    when :paperclip
+      return link_to 'download', download_path(:app_id => app.id, :column => col.field_name)
       
     else
       return app[col.name]
@@ -31,7 +31,7 @@ module ReviewHelper
     content = app[col.name]
     return nil if content == nil or content == ''
     
-    case col.type
+    case col.field_type
     when :text
       return link_to_function('&para;'.html_safe) do |page|
         page.call('summary_reveal', page.literal('event'),
@@ -40,8 +40,8 @@ module ReviewHelper
                                     app_response(app, col))
       end
       
-    when :binary
-      return link_to '&darr;'.html_safe, download_path(:app_id => app.id, :column => col.name)
+    when :paperclip
+      return link_to '&darr;'.html_safe, download_path(:app_id => app.id, :column => col.field_name)
       
     else
       return app_response(app, col)

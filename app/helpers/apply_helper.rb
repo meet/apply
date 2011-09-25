@@ -9,7 +9,7 @@ module ApplyHelper
   def app_input(call, name, col)
     validators = call.app_class.validators_on(col.name)
     
-    case col.type
+    case col.field_type
     when :string, :integer
       if option_validator = validators.find{ |v| v.is_a? ActiveModel::Validations::InclusionValidator }
         # Fixed set of options
@@ -39,9 +39,9 @@ module ApplyHelper
       # Checkbox
       check_box name, col.name
       
-    when :binary
+    when :paperclip
       # File upload
-      file_field name, col.name
+      file_field name, col.field_name
       
     end
   end

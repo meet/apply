@@ -2,13 +2,30 @@
 
 Apply to MEET.
 
+
 == Development
 
 Simulate HTTPS requests by using http://127.0.0.1 instead of localhost.
+
+Add an initializer for `Apply::Application.config.secret_token = ...`
+Add an initializer for `OpenIdAuthorization.provider = ...`
+Add an initializer for S3, e.g.:
+
+  if Rails.env.development?
+    ENV['S3_BUCKET'] = ...
+    ENV['S3_KEY'] = ...
+    ENV['S3_SECRET'] = ...
+  elsif Rails.env.test?
+    ...
+  end
+
 
 == Deployment to Heroku
 
   heroku config:add RAILS_SECRET_TOKEN=<long random string>
   heroku config:add EXCEPTIONAL_API_KEY=<key from getexceptional.com>
   heroku config:add OPENID_PROVIDER=<server URL>
+  heroku config:add S3_BUCKET=<bucket name>
+  heroku config:add S3_KEY=<access key ID>
+  heroku config:add S3_SECRET=<secret access key>
   heroku config:add PUBLIC_HOST=<hostname>

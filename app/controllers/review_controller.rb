@@ -52,11 +52,12 @@ class ReviewController < ApplicationController
   # Download a file uploaded with an application.
   def download
     @app = @call.app_class.find(params[:app_id])
-    content_type = Mime::Type.lookup(@app["#{params[:column]}_id"])
-    extension = Mime::EXTENSION_LOOKUP.invert[content_type]
-    send_data @app[params[:column]],
-              :filename => "#{@call.identify(@app)}.#{extension}",
-              :type => content_type, :disposition => 'inline'
+    column = params[:column].to_sym
+    if @call.app_class.attachment_definitions? and @call.app_class.attachment_definitions[column]
+      redirect_to @app.attachment_for(column).expiring_url
+    else
+      render :download_bad, :status => 404
+    end
   end
   
 end

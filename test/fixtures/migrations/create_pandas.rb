@@ -7,8 +7,7 @@ class CreatePandas < ActiveRecord::Migration
       t.date :favorite_bamboo_vintage_year
       t.text :experience
       t.boolean :cute
-      t.binary :photo
-      t.string :photo_id
+      t.string :photo_file_name
       t.datetime :created_at
     end
   end

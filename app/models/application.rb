@@ -21,7 +21,7 @@ module Application
     
     # Content columns to include in exports.
     def export_columns
-      content_columns.reject { |c| [ :text, :binary ].include? c.type }
+      content_columns.reject { |c| [ :text, :paperclip ].include? c.field_type }
     end
     
     # Should be private
@@ -30,11 +30,17 @@ module Application
       default_scope order(*call.identity_columns_a) if call
     end
     
-    def define_binary_setter(col)
-      define_method "#{col.name}=" do |upload|
-        self["#{col.name}_id"] = upload.content_type
-        super(upload.read)
-      end
+    def has_attached_s3_file(column)
+      has_attached_file column,
+                        :storage => :s3,
+                        :bucket => ENV['S3_BUCKET'],
+                        :s3_credentials => {
+                          :access_key_id => ENV['S3_KEY'],
+                          :secret_access_key => ENV['S3_SECRET']
+                        },
+                        :s3_permissions => :authenticated_read,
+                        :s3_headers => { 'Content-Disposition' => 'attachment' },
+                        :path => "/#{name.downcase}-:attachment/:id-:app_identity.:extension"
     end
     
   end
@@ -43,10 +49,30 @@ module Application
     base.extend(ApplicationClass)
     
     base.order_by_identity_columns
-    
-    base.content_columns.find_all { |c| c.type == :binary } .each do |c|
-      base.define_binary_setter(c)
-    end
   end
   
+end
+
+module ActiveRecord
+  module ConnectionAdapters
+    class Column
+      
+      def field_name
+        case name
+        when /(.*)_file_name$/
+          return $1
+        end
+        return name
+      end
+      
+      def field_type
+        case name
+        when /_file_name$/
+          return :paperclip
+        end
+        return type
+      end
+      
+    end
+  end
 end

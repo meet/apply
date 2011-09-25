@@ -20,7 +20,7 @@ en:
         anything_else:
           Anything else you would like to mention?
           Interests, talents, something you bring to the MEET team?
-        resume: "Please attach a copy of your resume as a PDF or plain text:"
+        resume_file_name: "Please attach a copy of your resume as a PDF or plain text:"
         how_hear: How did you hear about MEET?
   
   activerecord:
@@ -30,6 +30,7 @@ en:
         why_meet: Why MEET
         programming: Programming & industry
         teamwork: Teamwork, leadership, & project management
+        resume_file_name: Resume
     
     errors:
       models:
@@ -37,5 +38,5 @@ en:
           attributes:
             status:
               inclusion: can't be blank
-            resume:
-              blank: must be attached
+            resume_file_name:
+              empty: must be attached

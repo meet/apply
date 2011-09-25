@@ -3,6 +3,10 @@ require 'test_integration_helper'
 
 class BusinessFlowsTest < AppIntegrationTest
   
+  def teardown
+    Business.all.each { |app| app.destroy }
+  end
+  
   test_submit_and_review_application('business') do |test|
     [
       field(:first_name, 'Tim'),

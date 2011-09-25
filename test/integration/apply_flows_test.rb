@@ -2,6 +2,10 @@ require 'test_helper'
 
 class ApplyFlowsTest < ActionController::IntegrationTest
   
+  def teardown
+    Panda.all.each { |app| app.destroy }
+  end
+  
   test "call missing" do
     get '/'
     assert_response :missing
@@ -49,14 +53,14 @@ class ApplyFlowsTest < ActionController::IntegrationTest
     assert_template :thanks
     
     alice = Panda.find(assigns(:app).id)
+    assert_in_delta Time.zone.now, alice.created_at, 0.1
     assert_equal 'Alice the Panda', alice.name
     assert_nil alice.birthday
     assert_nil alice.favorite_bamboo_vintage_year
     assert_nil alice.experience
     assert alice.cute
-    assert_nil alice.photo
-    assert_nil alice.photo_id
-    assert_in_delta Time.zone.now, alice.created_at, 0.1
+    assert ! alice.photo.file?
+    assert_nil alice.photo_file_name
   end
   
   test "submit full application" do
@@ -78,15 +82,14 @@ class ApplyFlowsTest < ActionController::IntegrationTest
     assert_template :thanks
     
     bob = Panda.find(assigns(:app).id)
+    assert_in_delta Time.zone.now, bob.created_at, 1.0
     assert_equal 'Bob the Panda', bob.name
     assert_equal Date.parse('Feb 22, 1980'), bob.birthday
     assert_equal Date.civil(1492), bob.favorite_bamboo_vintage_year
     assert_match /nom/, bob.experience
     assert ! bob.cute
-    assert bob.photo
-    assert Pathname.new('test/fixtures/files/panda.jpg').read == bob.photo
-    assert_equal 'image/jpeg', bob.photo_id
-    assert_in_delta Time.zone.now, bob.created_at, 0.1
+    assert bob.photo.file?
+    assert File.new('test/fixtures/files/panda.jpg').read == bob.photo.to_file.read
   end
   
   test "submit preview" do

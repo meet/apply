@@ -10,12 +10,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110202120000) do
+ActiveRecord::Schema.define(:version => 20111001120000) do
 
   create_table "businesses", :force => true do |t|
-    t.string   "first_name",      :null => false
-    t.string   "last_name",       :null => false
-    t.string   "email",           :null => false
+    t.string   "first_name",       :null => false
+    t.string   "last_name",        :null => false
+    t.string   "email",            :null => false
     t.string   "major"
     t.date     "graduation_year"
     t.text     "why_meet"
@@ -23,8 +23,7 @@ ActiveRecord::Schema.define(:version => 20110202120000) do
     t.text     "teamwork"
     t.text     "limitations"
     t.text     "anything_else"
-    t.binary   "resume"
-    t.string   "resume_id"
+    t.string   "resume_file_name"
     t.string   "how_hear"
     t.datetime "created_at"
   end
@@ -58,9 +57,9 @@ ActiveRecord::Schema.define(:version => 20110202120000) do
   add_index "instructor_reviews", ["app_reviewer_id", "app_id"], :name => "index_instructor_reviews_on_app_reviewer_id_and_app_id", :unique => true
 
   create_table "instructors", :force => true do |t|
-    t.string   "first_name",      :null => false
-    t.string   "last_name",       :null => false
-    t.string   "email",           :null => false
+    t.string   "first_name",       :null => false
+    t.string   "last_name",        :null => false
+    t.string   "email",            :null => false
     t.string   "major"
     t.string   "status"
     t.date     "graduation_year"
@@ -69,8 +68,7 @@ ActiveRecord::Schema.define(:version => 20110202120000) do
     t.text     "teaching"
     t.text     "teamwork"
     t.text     "anything_else"
-    t.binary   "resume"
-    t.string   "resume_id"
+    t.string   "resume_file_name"
     t.string   "how_hear"
     t.datetime "created_at"
   end

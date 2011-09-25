@@ -23,8 +23,8 @@ class Call < ActiveRecord::Base
   end
   
   # Identifying string for the app (not necessarily unique).
-  def identify(app)
-    identity_columns_a.map { |c| app[c] } .join(' ')
+  def identify(app, joiner = ' ')
+    identity_columns_a.map { |c| app[c] } .join(joiner)
   end
   
 end

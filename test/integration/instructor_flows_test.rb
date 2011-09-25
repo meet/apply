@@ -3,6 +3,10 @@ require 'test_integration_helper'
 
 class InstructorFlowsTest < AppIntegrationTest
   
+  def teardown
+    Instructor.all.each { |app| app.destroy }
+  end
+  
   test_submit_and_review_application('instructor') do |test|
     [
       field(:first_name, 'Tim'),

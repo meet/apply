@@ -79,7 +79,7 @@ class AppIntegrationTest < ActionController::IntegrationTest
           if field.value.is_a? Rack::Test::UploadedFile
             path = download_path(:model => model, :app_id => 1, :column => field.name)
             s.assert_select header.parent, 'a[href=?]', path
-            downloads[path] = field.value
+            downloads[path] = field
           elsif field.value == true or field.value == false
             s.assert_select header.parent, 'p', field.value ? 'yes' : 'no'
           elsif field.name.to_s.ends_with? '_year'
@@ -92,12 +92,21 @@ class AppIntegrationTest < ActionController::IntegrationTest
         end
         
         # And check that uploads can be downloaded
-        downloads.each do |path, fixture|
+        downloads.each do |path, field|
+          fixture = field.value
           s.get path
+          url = URI.parse(s.response.redirect_url)
+          assert_equal 's3.amazonaws.com', url.host
+          dir = "/#{ENV['S3_BUCKET']}/#{model}-#{field.name.to_s.pluralize}/"
+          name = "1-#{call.identify(app, '-')}.#{fixture.original_filename.split('.').last}"
+          assert_match /^#{dir}#{name}\?AWSAccessKeyId=.*&Expires=.*&Signature=.*$/, url.request_uri
+          http = Net::HTTP.new(url.host, url.port)
+          http.use_ssl = url.port == Net::HTTP.https_default_port
+          http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          response = http.request_get(url.request_uri)
           assert_equal fixture.read, response.body
-          assert_equal fixture.content_type, response.headers['Content-Type']
-          ext = fixture.original_filename.split('.').last
-          assert_match /filename="#{call.identify(app)}.#{ext}"/, response.headers['Content-Disposition']
+          assert_equal fixture.content_type, response['Content-Type']
+          assert_equal 'attachment', response['Content-Disposition']
         end
       end
     end

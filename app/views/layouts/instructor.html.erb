@@ -1,6 +1,9 @@
 <% content_for :head do %>
 <link rel="stylesheet" type="text/css" href="http://meet.mit.edu/revised/css/style.css"/>
 <style>
+#banner a {
+  display: block; width: 90%; height: 90%;
+}
 p {
   margin: 0.5em 0;
 }
@@ -31,7 +34,7 @@ input, textarea { /* copy of body, p */
 <% end %>
 
 <% content_for :body do %>
-<div id="banner"></div>
+<div id="banner"><a href="http://meet.mit.edu/"></a></div>
 <div id="container">
 <div id="content">
 

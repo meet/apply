@@ -48,6 +48,8 @@ en:
       models:
         student:
           attributes:
+            _student_id_number:
+              wrong_length: should be %{count} digits long
             _student_gender:
               inclusion: can't be blank
             _student_city:

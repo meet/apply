@@ -5,6 +5,7 @@ class Student < ActiveRecord::Base
   
   validates_presence_of :_student_first_name, :_student_last_name, :_student_id_number
   validates_inclusion_of :_student_gender, :in => [ 'Male', 'Female' ]
+  validates_length_of :_student_id_number, :is => 9
   validates_uniqueness_of :_student_id_number
   validates_numericality_of :_student_id_number
   validates_format_of :_student_email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i

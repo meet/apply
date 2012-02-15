@@ -1,0 +1,39 @@
+en:
+  helpers:
+    label:
+      fellow:
+        major: Major(s) or research area
+        affiliation: University affiliation
+        why_fellow:
+          Why do you want to work at MEET as a Fellow?
+        challenges:
+          In your prior experience teaching or working with students, what were the three greatest challenges?
+          How did you overcome them?
+        role:
+          When working with excelling or outstanding students, what do you see as the role of the teacher?
+        foreign:
+          Living in a foreign environment, what challenges and opportunities do you anticipate encountering?
+        mission:
+          Beyond the teaching aspect of the Fellowship, how do you think you could contribute to the MEET mission?
+        resume_file_name: "Please attach a copy of your resume as a PDF or plain text:"
+        how_hear: How did you hear about the MEET Fellowship?
+  
+  activerecord:
+    attributes:
+      fellow:
+        affiliation: University
+        why_fellow: Why MEET Fellow
+        challenges: Teaching challenges
+        role: Teacher role
+        foreign: Foreigner challenges
+        mission: Further contributions
+        resume_file_name: Resume
+    
+    errors:
+      models:
+        fellow:
+          attributes:
+            status:
+              inclusion: can't be blank
+            resume_file_name:
+              empty: must be attached

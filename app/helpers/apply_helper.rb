@@ -50,7 +50,7 @@ module ApplyHelper
   def sentential_label(object_name, method)
     text = h(I18n.t(method, :scope => [ :helpers, :label, object_name ] ))
     text = text.gsub /[^ ].*?[\.\?]/ do |s|
-      content_tag :span, s, :style => 'white-space: nowrap'
+      content_tag :span, s, :class => 'nowrap'
     end
     label object_name, method, text.html_safe
   end

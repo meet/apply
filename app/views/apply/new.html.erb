@@ -42,7 +42,7 @@
       <td colspan="2"><%= app_input @call, :app, c %> <%= label @call.id, c.name %></td>
       
     <% else %>
-      <td><%= label @call.id, c.name %></td><td><%= app_input @call, :app, c %></td>
+      <td><%= label @call.id, c.name, :class => 'nowrap' %></td><td><%= app_input @call, :app, c %></td>
       
     <% end %>
     </tr>

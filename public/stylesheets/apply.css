@@ -1,3 +1,7 @@
+#apply-form-table td:first-child:not([colspan]) {
+	width: 1px;
+	padding-right: 1.5em;
+}
 .apply-form-section td, #apply-form-submit td {
   padding-top: 1.5em;
   padding-bottom: 0.5em;
@@ -37,6 +41,9 @@ input[type=text], textarea {
   -moz-box-shadow: 0 0 4px #f33;
   -webkit-box-shadow: 0 0 4px #f33;
   box-shadow: 0 0 4px #f33;
+}
+.nowrap {
+	white-space: nowrap;
 }
 #apply-preview {
   overflow: hidden;

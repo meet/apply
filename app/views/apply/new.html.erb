@@ -33,7 +33,7 @@
       <% last_section = section %>
     <% end %>
     
-    <tr class="apply-form-<%= c.type %>">
+    <tr class="apply-form-<%= c.field_type %>">
     <% case c.field_type %>
     <% when :paperclip, :text %>
       <td colspan="2"><%= sentential_label @call.id, c.name %><br/><%= app_input @call, :app, c %></td>

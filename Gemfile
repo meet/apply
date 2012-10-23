@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.10'
+gem 'rails', '3.0.17'
 
-gem 'aws-s3'
-gem 'paperclip'
+gem 'aws-sdk'
+gem 'paperclip', '2.8.0'
 gem 'sqlite3'
 gem 'ruby-openid'
 gem 'rack-openid'

@@ -82,7 +82,7 @@ class ApplyFlowsTest < ActionController::IntegrationTest
     assert_template :thanks
     
     bob = Panda.find(assigns(:app).id)
-    assert_in_delta Time.zone.now, bob.created_at, 1.0
+    assert_in_delta Time.zone.now, bob.created_at, 5.0
     assert_equal 'Bob the Panda', bob.name
     assert_equal Date.parse('Feb 22, 1980'), bob.birthday
     assert_equal Date.civil(1492), bob.favorite_bamboo_vintage_year

@@ -96,8 +96,8 @@ class AppIntegrationTest < ActionController::IntegrationTest
           fixture = field.value
           s.get path
           url = URI.parse(s.response.redirect_url)
-          assert_equal 's3.amazonaws.com', url.host
-          dir = "/#{ENV['S3_BUCKET']}/#{model}-#{field.name.to_s.pluralize}/"
+          assert_equal "#{ENV['S3_BUCKET']}.s3.amazonaws.com", url.host
+          dir = "/#{model}-#{field.name.to_s.pluralize}/"
           name = "1-#{call.identify(app, '-')}.#{fixture.original_filename.split('.').last}"
           assert_match /^#{dir}#{name}\?AWSAccessKeyId=.*&Expires=.*&Signature=.*$/, url.request_uri
           http = Net::HTTP.new(url.host, url.port)

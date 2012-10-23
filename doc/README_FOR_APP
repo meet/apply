@@ -29,3 +29,9 @@ Add an initializer for S3, e.g.:
   heroku config:add S3_KEY=<access key ID>
   heroku config:add S3_SECRET=<secret access key>
   heroku config:add PUBLIC_HOST=<hostname>
+
+
+== Heroku Maintenance
+
+  ActiveRecord::Base.connection.execute("SELECT count(*) FROM <apps>").first
+  ActiveRecord::Base.connection.execute("TRUNCATE <apps>").first

@@ -35,3 +35,8 @@ Add an initializer for S3, e.g.:
 
   ActiveRecord::Base.connection.execute("SELECT count(*) FROM <apps>").first
   ActiveRecord::Base.connection.execute("TRUNCATE <apps>").first
+
+Or:
+
+  heroku pg:psql
+  TRUNCATE <apps>

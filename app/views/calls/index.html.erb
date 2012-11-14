@@ -1,9 +1,20 @@
+<% content_for :head do %>
+<style>
+th {
+  padding-right: 1em;
+}
+</style>
+<% end %>
+
 <h1>Calls for Applications</h1>
 
 <table>
+<tr><th></th><th colspan="2">Applications</th><th colspan="2">Reviews</th></tr>
 <% @calls.sort_by { |c| c.app_class.model_name } .each do |call| %>
   <tr><th><%= link_to call.app_class.model_name.human.titleize.pluralize, call_path(call) %></th>
-      <td><%= link_to openclose('applications', call.open), public_apply_url(:model => call.id) %></td>
-      <td><%= link_to openclose('reviews', call.reviewable), review_path(:model => call.id) %></td></tr>
+      <td><%= call.app_class.count %></td>
+      <td><%= link_to openclose('', call.open), public_apply_url(:model => call.id) %></td>
+      <td><%= call.review_class ? call.review_class.count : '-' %></td>
+      <td><%= link_to openclose('', call.reviewable), review_path(:model => call.id) %></td></tr>
 <% end %>
 </table>

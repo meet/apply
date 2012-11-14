@@ -11,9 +11,17 @@ module ApplyHelper
     
     case col.field_type
     when :string, :integer
-      if option_validator = validators.find{ |v| v.is_a? ActiveModel::Validations::InclusionValidator }
+      if validator = validators.find{ |v| v.is_a? ActiveModel::Validations::InclusionValidator }
         # Fixed set of options
-        select name, col.name, option_validator.options[:in], :include_blank => true
+        select name, col.name, validator.options[:in], :include_blank => true
+      elsif validator = validators.find{ |v| v.is_a? ActiveModel::Validations::PresenceValidator and v.options[:suggest] }
+        # Fixed set of options, or other
+        pick = instance_variable_get("@#{name}")[col.name]
+        if pick and not pick.empty? and not validator.options[:suggest].include?(pick)
+          text_field name, col.name
+        else
+          select name, col.name, validator.options[:suggest] + [ '-Other-' ], :include_blank => true
+        end
       else
         # Short answer text
         text_field name, col.name

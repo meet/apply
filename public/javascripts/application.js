@@ -22,4 +22,14 @@ document.observe("dom:loaded", function() {
       elt.up().addClassName('openclose-open');
     });
   });
+  
+  $$('select option[value="-Other-"]').each(function(option) {
+    option.up().on('change', function() {
+      if (option.selected) {
+        var input = Element('input', { 'type': 'text', 'name': this.name });
+        this.replace(input);
+        input.focus();
+      }
+    });
+  });
 });

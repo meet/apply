@@ -53,8 +53,8 @@ en:
             _student_gender:
               inclusion: can't be blank
             _student_city:
-              inclusion: must be one of the choices, or -Other-
+              blank: must be one of the choices, or -Other-
             _student_school:
-              inclusion: must be one of the choices, or -Other-
+              blank: must be one of the choices, or -Other-
             _permission_to_apply:
               accepted: must be given

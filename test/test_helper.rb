@@ -16,6 +16,10 @@ end
 require 'fixtures/migrations/create_pandas'
 require 'fixtures/models/panda'
 
+# Veterinarians
+require 'fixtures/migrations/create_veterinarians'
+require 'fixtures/models/veterinarian'
+
 # Zookeepers and ZookeeperReviews
 require 'fixtures/migrations/create_zookeepers'
 require 'fixtures/models/zookeeper'

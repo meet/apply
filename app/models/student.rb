@@ -10,11 +10,17 @@ class Student < ActiveRecord::Base
   validates_numericality_of :_student_id_number
   validates_format_of :_student_email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   
-  validates_inclusion_of :_student_city, :in => [
-    'Jerusalem', 'Bet Shemesh', 'Bethlehem', 'Mevasseret', 'Ramallah', '-Other-'
+  validates_presence_of :_student_city, :suggest => [
+    'Jerusalem',
+    'Bet Shemesh',
+    'Bethlehem',
+    'Mevasseret',
+    'Ramallah',
+    'Nazareth',
+    'Nazareth Illit'
   ]
   
-  validates_inclusion_of :_student_school, :in => [
+  validates_presence_of :_student_school, :suggest => [
     "Academia",
     "Al-mutran - St. George",
     "Al-tour for Girls",
@@ -56,8 +62,7 @@ class Student < ActiveRecord::Base
     "Tehila",
     "Terra Sancta - Bethlehem",
     "Terra Sancta - Jerusalem",
-    "Ziv",
-    "-Other-"
+    "Ziv"
   ]
   
   validates_presence_of :_parent_full_name

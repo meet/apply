@@ -44,6 +44,38 @@ class ApplyFlowsTest < ActionController::IntegrationTest
     end
   end
   
+  test "submit incomplete using suggestion" do
+    get '/veterinarian'
+    assert_response :success
+    assert_template :new
+    assert_select 'input[name=?]', 'app[specialty]', false
+    assert_select 'select[name=?]', 'app[specialty]'
+    
+    post '/veterinarian', { 'app[specialty]' => 'Mammalia' }
+    assert_response :success
+    assert_template :new
+    assert_select 'input[name=?]', 'app[specialty]', false
+    assert_select 'select[name=?]', 'app[specialty]' do |elts|
+      assert_select 'option[selected]', 'Mammalia'
+    end
+  end
+  
+  test "submit incomplete ignoring suggestion" do
+    get '/veterinarian'
+    assert_response :success
+    assert_template :new
+    assert_select 'input[name=?]', 'app[specialty]', false
+    assert_select 'select[name=?]', 'app[specialty]'
+    
+    post '/veterinarian', { 'app[specialty]' => 'Myxini' }
+    assert_response :success
+    assert_template :new
+    assert_select 'input[name=?]', 'app[specialty]' do |elts|
+      assert_equal 'Myxini', elts.first['value']
+    end
+    assert_select 'select[name=?]', 'app[specialty]', false
+  end
+  
   test "submit minimal application" do
     call = Call.find('panda')
     call.update_attribute(:open, true)

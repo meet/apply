@@ -6,6 +6,14 @@ panda:
   reviewable: false
   identity_columns: name birthday
 
+veterinarian:
+  id: veterinarian
+  title: Vets Needed
+  description:
+  open: true
+  reviewable: false
+  identity_columns: name
+
 zookeeper:
   id: zookeeper
   title: Zookeepers Needed

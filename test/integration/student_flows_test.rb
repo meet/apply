@@ -11,7 +11,7 @@ class StudentFlowsTest < AppIntegrationTest
       field(:_student_gender, 'Male'),
       field(:_student_birthday, Date.new(1861, 4, 10)),
       field(:_student_city, 'Jerusalem'),
-      field(:_student_school, '-Other-'),
+      field(:_student_school, 'MITx High School'),
       field(:_student_address, '77 Massachusetts Avenue'),
       field(:_student_home_phone, '123'),
       field(:_student_cell_phone, '123'),

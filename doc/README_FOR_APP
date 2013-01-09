@@ -7,17 +7,24 @@ Apply to MEET.
 
 Simulate HTTPS requests by using http://127.0.0.1 instead of localhost.
 
-Add an initializer for `Apply::Application.config.secret_token = ...`
-Add an initializer for `OpenIdAuthorization.provider = ...`
+Add an initializer for the secret token:
+
+  Apply::Application.config.secret_token = ...
+
+Add an initializer for the OpenID provider:
+
+  OpenIdAuthorization.provider = 'https://...'
+
 Add an initializer for S3, e.g.:
 
   if Rails.env.development?
     ENV['S3_BUCKET'] = ...
-    ENV['S3_KEY'] = ...
-    ENV['S3_SECRET'] = ...
   elsif Rails.env.test?
-    ...
+    ENV['S3_BUCKET'] = ...
   end
+
+  ENV['S3_KEY'] = ...
+  ENV['S3_SECRET'] = ...
 
 
 == Deployment to Heroku

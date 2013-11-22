@@ -3,7 +3,7 @@
 <p id="apply-form-deadline">DEADLINE midnight on <%= @call.deadline.to_s :long %></p>
 <% end %>
 
-<p id="apply-form-description"><%= @call.description %></p>
+<p id="apply-form-description"><%= raw @call.description %></p>
 
 <% if @late %>
 <p id="apply-form-notice">User <%= @current_user %> adding late application</p>

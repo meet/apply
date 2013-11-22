@@ -1,4 +1,4 @@
 <h1><%= @call.title %></h1>
 <p><%= @call.app_class.model_name.human.titleize %> applications are not open right now.</p>
-<p><%= @call.description %></p>
+<p><%= raw @call.description %></p>
 <p>If you have any questions, please email <%= contact %>.</p>

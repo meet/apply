@@ -21,7 +21,6 @@ class Student < ActiveRecord::Base
   ]
   
   validates_presence_of :_student_school, :suggest => [
-    "Other",
     "Al Tour Girls School",
     "Beit Hinuch",
     "Boyer",
